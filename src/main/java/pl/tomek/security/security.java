@@ -32,6 +32,8 @@ public class security extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .usernameParameter("user")
                 .passwordParameter("pass")
+                .failureUrl("/formError")
+                .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

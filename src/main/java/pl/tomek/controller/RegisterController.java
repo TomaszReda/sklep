@@ -11,6 +11,8 @@ import pl.tomek.model.User;
 import pl.tomek.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class RegisterController {
@@ -30,7 +32,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String SaveUser(@Valid @ModelAttribute User user, BindingResult bindingResult)
+    public String SaveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,Model model)
     {
         if(bindingResult.hasErrors())
         {
@@ -38,9 +40,27 @@ public class RegisterController {
         }
         else
         {
+            List<User> all=userRepository.findAll();
+            for(User a:all)
+            {
+             if(user.getLogin().equals(a.getLogin()))
+             {
+                model.addAttribute("login",a.getLogin());
+                 return "registerForm";
+             }
+             if(user.getEmail().equals(a.getEmail()))
+             {
+                 model.addAttribute("email",a.getEmail());
+                 return "registerForm";
+             }
+
+            }
+
             userRepository.save(user);
             return "succesForm";
         }
+
+
 
     }
 
