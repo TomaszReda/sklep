@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html  lang="pl"  xmlns:th="http://www.thymeleaf.org"  >
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<h1>Rejestracja</h1>
+<form method="post" action="#" th:action="@{/register}" th:object="${user}">
+    <p th:errors="*{firstname}">Imie nie może być puste i musi miec minimum 5 znaków</p>
+    <input type="text" th:field="*{firstname}" placeholder="imie"/> <br/>
+    <p th:errors="*{lastname}">Nazwisko nie może być puste i musi miec minimum 5 znaków</p>
+    <input type="text" th:field="*{lastname}" placeholder="nazwisko" /><br/>
+    <p th:errors="*{email}">To musi byc email</p>
+    <input type="email" th:field="*{email}" placeholder="email" /><br/>
+    <p th:errors="*{login}">Login nie może być puste i musi miec minimum 5 znaków</p>
+    <input type="text" th:field="*{login}" placeholder="login"/> <br/>
+    <p th:errors="*{passworld}">Haslo nie moze byc puste i minimum 5 znakow</p>
+    <input type="password" th:field="*{passworld}" placeholder="haslo "/><br/>
+    <input type="submit" value="Wyslij"/>
+
+
+</form>
+
+</body>
+</html>

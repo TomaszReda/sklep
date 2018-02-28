@@ -1,0 +1,1 @@
+insert into user_role(role,description) values('DEFAULT_USER','Domyslna rola przy rejestracji');

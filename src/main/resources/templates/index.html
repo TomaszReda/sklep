@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=iso-8859-2" />
     <!--
@@ -9,34 +9,31 @@
     //This notice MUST stay intact for legal use
     -->
     <title>  ...   </title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <body>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0" background="/static/images/toptlo.gif">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" background="/images/toptlo.gif">
     <tr valign="top">
-        <td width="50%"><img border="0" src="/static/images/top.gif" width="236" height="89" /></td>
+        <td width="50%"><img border="0" src="/images/top.gif" width="236" height="89" /></td>
         <td width="50%" height="89">
             <!--  //wstaw tu swoj± nazwę i slogan -->
-            <h1 class="logo">Twoja nazwa&nbsp;&nbsp;</h1>
-            <p class="logo">Twój slogan tutaj&nbsp;&nbsp;</p></td>
+            <h1 class="logo">Sklep internetowy &nbsp;&nbsp;</h1>
+            <p class="logo">Tutaj kupisz i wystawisz wszystko&nbsp;&nbsp;</p></td>
     </tr>
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
     <tr>
 
-        <td width="184px" background="/static/images/tlo.gif" valign="top">
-            <img border="0" src="/static/images/menu.gif" width="184" height="39" alt="stdarek" /><br/>
+        <td width="184px" background="/images/tlo.gif" valign="top">
+            <img border="0" src="/images/menu.gif" width="184" height="39" alt="stdarek" /><br/>
             <table ID="navigate" cellpadding="0" cellspacing="0" border="0">
 
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
-                <tr><td class="menu"><a href="#">Link</a></td></tr>
+                <tr><td class="menu"><a href="#">Szukaj</a></td></tr>
+                <tr><td class="menu"><a th:href="@{/testy}">Wystaw</a></td></tr>
+                <tr><td class="menu"><a th:href="@{/register}">Zarejestruj sie</a></td></tr>
+                <tr><td class="menu"><a href="#">Zaloguj sie</a></td></tr>
+
             </table>
             <br/><br/>
             <p>&nbsp;</p>
@@ -55,9 +52,8 @@
             <br />
         </td>
         <td valign="top"><br />
-            <h1>Tytuł strony</h1>
-            <p>Witajcie :-) wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony,  wpisz tu tre¶ć swojej strony </p>
-            <p>&nbsp;</p>
+
+
             <p class="stopka" />&copy; COPYRIGHT 2007 ALL RIGHTS RESERVED</td>
     </tr>
 </table>

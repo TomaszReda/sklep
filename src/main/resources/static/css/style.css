@@ -1,5 +1,5 @@
 BODY{scrollbar-base-color: #0099ff; margin: 0px; padding: 0px; border: #000000 0px solid;}
-td.menu {;background-image : url("/static/images/przycisk.gif"); background-repeat : no-repeat; width :174px;height:30px}
+td.menu {;background-image : url("/images/przycisk.gif"); background-repeat : no-repeat; width :174px;height:30px}
 h1.logo {font-family: Arial;font-style : italic ;font-size : 16pt; font-weight :bold;text-align : right; color :#FFFFFF;margin:0;margin-right:2px;padding:10px 0 10px 0}
 p.logo {font-family: Arial;font-style : normal ;font-size : 9pt; font-weight :bold;text-align : right; color :#FFFFFF;margin:0;margin-right:5px;padding:0}
 p.stopka {font-family: Arial;font-style : normal ;font-size : 8pt; font-weight :normal;text-align : center; color :#000000 }
