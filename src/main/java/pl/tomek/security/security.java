@@ -23,12 +23,13 @@ public class security extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/search").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/loginform")
                 .permitAll()
-                .loginProcessingUrl("/processlogin")
+                .loginProcessingUrl("/processinglogin")
                 .permitAll()
                 .usernameParameter("user")
                 .passwordParameter("pass")
@@ -36,8 +37,9 @@ public class security extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/");
+                .logoutUrl("/logmeout")
+                .logoutSuccessUrl("/")
+                .permitAll();
 
         ;
 
