@@ -19,6 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
+
     @NotEmpty(message = "{pl.tomek.model.Product.empty}")
     private String name;
     @NotEmpty(message = "{pl.tomek.model.Product.empty}")
