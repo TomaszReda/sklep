@@ -231,6 +231,7 @@ input[type="button"].button-primary:focus {
 
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+input[type="reset"],
 input[type="email"],
 input[type="number"],
 input[type="search"],
@@ -256,6 +257,7 @@ input[type="text"],
 input[type="user"],
 input[type="tel"],
 input[type="url"],
+input[type="reset"],
 input[type="password"],
 textarea {
   -webkit-appearance: none;
@@ -273,6 +275,7 @@ input[type="user"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
 input[type="password"]:focus,
+input[type="reset"]:focus,
 textarea:focus,
 select:focus {
   border: 1px solid #33C3F0;
@@ -427,18 +430,12 @@ there.
 @media (min-width: 1200px) {}
 
 
-input[type="submit"]{
+input[type="submit"],input[type="reset"]{
   border: none;
   color: deeppink;
 }
-input[type="submit"]:hover, input[type="submit"]:focus{
+input[type="submit"]:hover,input[type="reset"]:hover, input[type="submit"]:focus,input[type="reset"]:focus{
   color: darkorchid;
 }
 
-input[type="reset"]{
-  border: none;
-  color: deeppink;
-}
-input[type="reset"]:hover, input[type="reset"]:focus{
-  color: darkorchid;
-}
+
