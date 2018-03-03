@@ -434,3 +434,11 @@ input[type="submit"]{
 input[type="submit"]:hover, input[type="submit"]:focus{
   color: darkorchid;
 }
+
+input[type="reset"]{
+  border: none;
+  color: deeppink;
+}
+input[type="reset"]:hover, input[type="reset"]:focus{
+  color: darkorchid;
+}
