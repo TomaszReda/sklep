@@ -432,7 +432,7 @@ there.
 
 input[type="submit"],input[type="reset"]{
   border: none;
-  color: deeppink;
+  color: #ff15a1;
 }
 input[type="submit"]:hover,input[type="reset"]:hover, input[type="submit"]:focus,input[type="reset"]:focus{
   color: darkorchid;
