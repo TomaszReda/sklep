@@ -119,34 +119,11 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-                <table th:each="prod: ${products}" th:object="${prod}">
-                    <tr>
-                        <th>Nazwa</th><td th:text="*{name}"></td>
-                    </tr>
+              <ul th:each="n: ${products}" th:object="${n}" class="list-group" >
+                  <li class="list-group-item" > <a  th:href="@{/details(ID=*{ID})}" th:text="*{header}"> </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>
 
-                    <tr>
-                        <th>Stan</th><td th:text="*{state}"></td>
-                    </tr>
-                    <tr>
-                        <th>Kategoria</th><td th:text="*{kategoria}"></td>
-                    </tr>
-                    <tr>
-                        <th>Cena</th><td th:text="*{prcies}"></td>
-                    </tr>
-                    <tr>
-                        <th>Opis</th><td th:text="*{opis}"></td>
-                    </tr>
-                    <tr>
-                        <th>Aukcji</th><td th:text="*{aukcja}"></td>
+              </ul>
 
-                    </tr>
-                    <tr>
-                        <th>Cena na aukcji</th><td th:text="*{cenapoczatkowa}"></td>
-                    </tr>
-                    <tr>
-                        <th><a th:href="@{/usun(id=*{ID})}">Usun</a> </th>
-                    </tr>
-                </table>
 
                  <a th:each="i: ${ile}" th:text="${i}+1" th:href="@{/my(page=${i})}"></a>
 

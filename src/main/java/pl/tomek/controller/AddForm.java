@@ -49,9 +49,20 @@ public class AddForm {
             String name = auth.getName(); //get logged in username
             product.setOwner(name);
             productRepository.save(product);
-            model.addAttribute("add","dodano");
+            model.addAttribute("Nie","Nie");
             model.addAttribute("username",name);
             model.addAttribute("nieznajomy","anonymousUser");
-            return "addForm";
-        } }
+            return "redirect:/succes";
+        }
+    }
+
+        @GetMapping("/succes")
+        public String succes(Model model)
+        {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName(); //get logged in username
+            model.addAttribute("username",name);
+            model.addAttribute("nieznajomy","anonymousUser");
+            return "succedAddForm";
+        }
 }

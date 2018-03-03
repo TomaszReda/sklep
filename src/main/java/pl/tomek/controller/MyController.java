@@ -35,22 +35,22 @@ public class MyController {
 
 
 
-            Page<Product> all=productRepository.findByOwner(name,new PageRequest(page,5));
+            Page<Product> all=productRepository.findByOwner(name,new PageRequest(page,10));
             int ile=productRepository.findByOwner(name).size();
 
-            if(ile%5==0)
+            if(ile%10==0)
             {
-                ile=ile/5;
+                ile=ile/10;
             }
             else
             {
-             ile=ile/5+1;
+             ile=ile/10+1;
             }
             int tab[]=new int[ile];
             for(int i=0;i<ile;i++)
             {
                 tab[i]=i;
-                System.out.println(tab[i]);
+
             }
             model.addAttribute("ile",tab);
             model.addAttribute("products", all);
@@ -60,11 +60,26 @@ public class MyController {
 
 
 
+
+
     @GetMapping("/usun")
-    public String usun(@RequestParam Long id)
+    public String usun(@RequestParam Long ID)
     {
-        productRepository.delete(id);
+        productRepository.delete(ID);
         return "redirect:my";
+    }
+
+    @GetMapping("/details")
+    public String detail(@RequestParam Long ID,Model model)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
+
+        Product product=productRepository.findOne(ID);
+        model.addAttribute("product",product);
+        return "myDetails";
     }
 
 

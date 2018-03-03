@@ -118,55 +118,8 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-                <h1 th:if="${add}">Product zostaw wystawiony </h1>
-                <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-                <form method="post" action="#" th:action="@{/add}" th:object="${product}">
-                    <p th:errors="*{name}">Nie moze byc puste </p>
-                    <input type="text" th:field="*{name}" placeholder="nazwa" /> <br />
-                    <p th:errors="*{state}">Nie moze byc puste </p>
-                    <select name="nazwa" th:field="*{state}">
-                        <option th:value="Zły">Zły</option>
-                        <option th:value="Dobry">Dobry</option>
-                        <option th:value="Bardzo_Dobry">Bardzo Dobry</option>
-                        <option th:value="Nie_używany">Nie używany</option>
-
-                    </select><br />
-
-
-                    Kategoria:
-                    <select name="nazwa" th:field="*{kategoria}">
-                        <option th:value="AGD">AGD</option>
-                        <option th:value="RTV">RTV</option>
-                        <option th:value="Sport">Sport</option>
-                        <option th:value="Rozrywka">Rozrywka</option>
-                        <option th:value="Inne">Inne</option>
-                    </select><br />
-
-                    <p th:errors="*{header}">Nie moze byc puste </p>
-                     <input type="text" th:field="*{header}" placeholder="Naglowek" /><br />
-
-
-                    <p th:errors="*{opis}">Nie moze byc puste </p>
-                    <textarea th:field="*{opis}" placeholder="opis" /> <br />
-                    <p th:errors="*{aukcja}">Nie moze byc puste </p>
-
-                    <h4>Aukcja</h4>
-
-                        <p>
-                            <input type="radio" name="gender" th:field="*{aukcja}" value="Tak" checked="checked" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample"/>Tak
-                            <input type="radio" name="gender" th:field="*{aukcja}" value="Nie"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>Nie
-                        </p>
-
-                    <p th:errors="*{prcies}">Minimum 1 </p>
-                    Cena  kup tera/początkowa      <input type="number" th:field="*{prcies}" />
-
-
-
-                    <br />
-
-                    <input type="submit" value="Wyslij" />
-                    <input type="reset" value="Reset" />
-                </form>
+              <h1>Produkt zostaw wystawiony!</h1>
+                <a th:href="@{/add}">Dodaj kolejny</a>
                 <!--
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for..." />

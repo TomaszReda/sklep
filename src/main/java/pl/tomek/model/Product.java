@@ -2,6 +2,7 @@ package pl.tomek.model;
 
 import javafx.scene.image.Image;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
@@ -24,6 +25,8 @@ public class Product {
     private String name;
     @NotEmpty(message = "{pl.tomek.model.Product.empty}")
     private String state;
+    @Length(min = 1,max = 38,message ="{pl.tomek.model.Product.header}")
+    private String header;
     private String kategoria;
     @Min(value = 1,message = "{pl.tomek.model.Product.min}")
     private double prcies;
@@ -33,7 +36,7 @@ public class Product {
     private String aukcja;
     private String owner;
 
-    private double cenapoczatkowa;
+
 
 
 
