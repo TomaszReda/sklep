@@ -25,7 +25,7 @@ public class Product {
     private String name;
     @NotEmpty(message = "{pl.tomek.model.Product.empty}")
     private String state;
-    @Length(min = 1,max = 38,message ="{pl.tomek.model.Product.header}")
+    @Length(min = 1,max = 80,message ="{pl.tomek.model.Product.header}")
     private String header;
     private String kategoria;
     @Min(value = 1,message = "{pl.tomek.model.Product.min}")
@@ -35,6 +35,8 @@ public class Product {
     @NotEmpty(message = "{pl.tomek.model.Product.empty}")
     private String aukcja;
     private String owner;
+
+    private String licytujacy;
 
 
 

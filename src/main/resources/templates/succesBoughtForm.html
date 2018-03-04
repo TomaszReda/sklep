@@ -20,8 +20,6 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Mobile Specific Metas
@@ -60,10 +58,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Strona glowna <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a th:href="@{/}">Strona glowna <span class="sr-only">(current)</span></a></li>
 
+                <li  th:unless="${username}==${nieznajomy}"><a th:href="@{/add}">Wystaw</a></li>
                 <li><a th:href="@{/search}">Wyszukaj</a></li>
-
+                <li th:unless="${username}==${nieznajomy}"><a th:href="@{/my}">Moje wystawione</a></li>
 
                 <!--  <li class="dropdown">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -87,9 +86,11 @@
             </form>
             -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/register}">Zarejestruj się</a></li>
-                <li><a th:href="@{/loginform}">Zaloguj się</a></li>
-
+                <li th:if="${username}==${nieznajomy}"><a th:href="@{/register}">Zarejestruj się</a></li>
+                <li th:if="${username}==${nieznajomy}"><a th:href="@{/loginform}">Zaloguj się</a></li>
+                <li th:unless="${username}==${nieznajomy}"> <form action="logmeout" th:action="@{/logmeout}" method="post" >
+                    <input type="submit" value="Wyloguj" />
+                </form> </li>
                 <!-- <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                       <ul class="dropdown-menu">
@@ -115,30 +116,16 @@
 
 
 
-
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
+            <h3>Kupiłeś produkt</h3>
+                <a th:href="@{/search}">Wroc spowrotem do wyszukiwania</a>
 
 
-                <h1>Rejestracja</h1>
-                <form method="post" action="#" th:action="@{/register}" th:object="${user}">
-                    <p class="text-danger" th:errors="*{firstname}">Imie nie może być puste i musi miec minimum 5 znaków</p>
-                    <input type="text" th:field="*{firstname}" placeholder="imie"/> <br/>
-                    <p class="text-danger" th:errors="*{lastname}">Nazwisko nie może być puste i musi miec minimum 5 znaków</p>
-                    <input type="text" th:field="*{lastname}" placeholder="nazwisko" /><br/>
-                    <p class="text-danger" th:errors="*{email}">To musi byc email</p>
-                    <p th:if="${email}"  > Konto z tym emailem juz istnieje </p>
-                    <input type="email" th:field="*{email}" placeholder="email" /><br/>
-                    <p class="text-danger" th:errors="*{login}">Login nie może być puste i musi miec minimum 5 znaków</p>
-                    <p th:if="${login}" > Konto z tym loginem juz istnieje</p>
-                    <input type="text" th:field="*{login}" placeholder="login"/> <br/>
-                    <p class="text-danger" th:errors="*{passworld}">Haslo nie moze byc puste i minimum 5 znakow</p>
-                    <input type="password" th:field="*{passworld}" placeholder="haslo "/><br/>
-                    <input type="submit" value="Wyslij"/>
 
 
-                </form>
+
                 <!--
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for..." />

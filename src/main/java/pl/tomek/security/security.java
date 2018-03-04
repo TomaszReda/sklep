@@ -24,6 +24,7 @@ public class security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/search").permitAll()
+                .antMatchers("/detailsSearch").permitAll()
                 .antMatchers("/terms").permitAll()
                 .antMatchers("/privacy").permitAll()
                 .antMatchers("/api").permitAll()

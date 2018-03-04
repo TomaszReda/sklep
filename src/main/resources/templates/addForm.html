@@ -121,9 +121,9 @@
                 <h1 th:if="${add}">Product zostaw wystawiony </h1>
                 <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
                 <form method="post" action="#" th:action="@{/add}" th:object="${product}">
-                    <p th:errors="*{name}">Nie moze byc puste </p>
+                    <p class="text-danger" th:errors="*{name}">Nie moze byc puste </p>
                     <input type="text" th:field="*{name}" placeholder="nazwa" /> <br />
-                    <p th:errors="*{state}">Nie moze byc puste </p>
+                    <p class="text-danger" th:errors="*{state}">Nie moze byc puste </p>
                     <select name="nazwa" th:field="*{state}">
                         <option th:value="Zły">Zły</option>
                         <option th:value="Dobry">Dobry</option>
@@ -142,13 +142,13 @@
                         <option th:value="Inne">Inne</option>
                     </select><br />
 
-                    <p th:errors="*{header}">Nie moze byc puste </p>
+                    <p class="text-danger" th:errors="*{header}">Nie moze byc puste </p>
                      <input type="text" th:field="*{header}" placeholder="Naglowek" /><br />
 
 
-                    <p th:errors="*{opis}">Nie moze byc puste </p>
+                    <p class="text-danger" th:errors="*{opis}">Nie moze byc puste </p>
                     <textarea th:field="*{opis}" placeholder="opis" /> <br />
-                    <p th:errors="*{aukcja}">Nie moze byc puste </p>
+                    <p class="text-danger" th:errors="*{aukcja}">Nie moze byc puste </p>
 
                     <h4>Aukcja</h4>
 
@@ -157,7 +157,7 @@
                             <input type="radio" name="gender" th:field="*{aukcja}" value="Nie"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>Nie
                         </p>
 
-                    <p th:errors="*{prcies}">Minimum 1 </p>
+                    <p class="text-danger" th:errors="*{prcies}">Minimum 1 </p>
                     Cena  kup tera/początkowa      <input type="number" th:field="*{prcies}" />
 
 
