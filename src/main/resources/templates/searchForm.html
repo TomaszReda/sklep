@@ -123,14 +123,24 @@
                 <form  METHOD="post"  action="#" th:action="@{/search}" >
                 <div class="input-group">
 
-                    <input type="text" class="form-control" name="word" placeholder="Search for..." />
+                    <input type="text" class="form-control" name="word" th:value="${word}" placeholder="Search"  />
                     <span class="input-group-btn">
+
                   <button class="btn btn-default" type="submit">
                   <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                   </button>
                 </span>
                 </div>
+
+                    <br />
+                    <select name="nazwaa" >
+                        <option th:value="trafnosc" >Trafność: największa  </option>
+                        <option th:value="cenar">Cena: Rosonąco </option>
+                        <option th:value="cenam">Cena: Malejąco</option>
+                    </select>
+
                 </form>
+
                 <br />
                 <ul th:each="n: ${products}" th:object="${n}" class="list-group" >
                     <li class="list-group-item" > <a  th:href="@{/detailsSearch(ID=*{ID})}" th:text="*{header}"> </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>

@@ -60,9 +60,9 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">Strona glowna <span class="sr-only">(current)</span></a></li>
 
-                <li  th:unless="${username}==${nieznajomy}"><a th:href="@{/add}">Wystaw</a></li>
+                <li  ><a th:href="@{/add}">Wystaw</a></li>
                 <li><a th:href="@{/search}">Wyszukaj</a></li>
-                <li th:unless="${username}==${nieznajomy}"><a th:href="@{/my}">Moje wystawione</a></li>
+                <li ><a th:href="@{/my}">Moje wystawione</a></li>
 
                 <!--  <li class="dropdown">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -111,7 +111,6 @@
 <div class="container">
     <div class="row">
 
-        <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 
 
@@ -119,48 +118,54 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-                <h3 th:text="${product.header}">Naglowek</h3>
-                <br />
 
-                <table th:object="${product}" class="table table-bordered table-hover table-inverse">
+                <form method="post" action="#" th:action="@{/edytuj(ID=${ID})}" th:object="${product}">
+                    <p class="text-danger" th:errors="*{name}" >Nie moze byc puste </p>
+                    <input type="text" th:field="*{name}" th:value="*{name}"  /> <br />
+                    <p class="text-danger" th:errors="*{state}">Nie moze byc puste </p>
+                    <select name="nazwa" th:field="*{state}" th:value="*{state}" >
+                        <option th:value="Zły">Zły</option>
+                        <option th:value="Dobry">Dobry</option>
+                        <option th:value="Bardzo_Dobry">Bardzo Dobry</option>
+                        <option th:value="Nie_używany">Nie używany</option>
 
-                    <thead>
-
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>Nazwa</th><td th:text="*{name}"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Stan</th><td th:text="*{state}"></td>
-                    </tr>
-                    <tr>
-                        <th>Kategoria</th><td th:text="*{kategoria}"></td>
-                    </tr>
-                    <tr>
-                        <th>Cena</th><td th:text="*{prcies}"></td>
-                    </tr>
-                    <tr>
-                        <th>Opis</th><td th:text="*{opis}"></td>
-                    </tr>
-                    <tr>
-                        <th>Aukcji</th><td th:text="*{aukcja}"></td>
-
-                    </tr>
-                    <tr>
-                        <td> <a th:href="@{/usun(ID=*{ID})}">Usun</a> </td>
-                        <td><a th:href="@{/edytuj(ID=*{ID})}">Edytuj</a> </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    </select><br />
 
 
+                    Kategoria:
+                    <select name="nazwa" th:field="*{kategoria}" th:value="*{kategoria}" >
+                        <option th:value="AGD">AGD</option>
+                        <option th:value="RTV">RTV</option>
+                        <option th:value="Sport">Sport</option>
+                        <option th:value="Rozrywka">Rozrywka</option>
+                        <option th:value="Inne">Inne</option>
+                    </select><br />
+
+                    <p class="text-danger" th:errors="*{header}">Nie moze byc puste </p>
+                    <input type="text" th:field="*{header}" th:value="*{header}" /><br />
+
+
+                    <p class="text-danger" th:errors="*{opis}">Nie moze byc puste </p>
+                    <textarea th:field="*{opis}" placeholder="opis" /> <br />
+                    <p class="text-danger" th:errors="*{aukcja}">Nie moze byc puste </p>
+
+                    <h4>Aukcja</h4>
+
+                    <p>
+                        <input type="radio" name="gender" th:field="*{aukcja}" value="Tak" checked="checked" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample"/>Tak
+                        <input type="radio" name="gender" th:field="*{aukcja}" value="Nie"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>Nie
+                    </p>
+
+                    <p class="text-danger" th:errors="*{prcies}">Minimum 1 </p>
+                    Cena  kup tera/początkowa      <input type="number" th:field="*{prcies}" />
 
 
 
+                    <br />
 
-
+                    <input type="submit" value="Wyslij" />
+                    <input type="reset" value="Reset" />
+                </form>
                 <!--
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for..." />

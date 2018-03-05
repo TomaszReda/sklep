@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.tomek.model.Product;
 import pl.tomek.repository.ProductRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class SearchController {
@@ -29,42 +28,47 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String saerch(Model model, @RequestParam(defaultValue = "0") int page) {
+    public String saerch(Model model, @RequestParam(defaultValue = "0") int page,@RequestParam(required = false) String word) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
 
+        System.out.println(word);
 
-        Page<Product> all = productRepository.findAll(new PageRequest(page, 10));
-        int ile = productRepository.findAll().size();
+                Page<Product> all = productRepository.findAll(new PageRequest(page, 10));
+                int ile = productRepository.findAll().size();
 
-        if (ile % 10 == 0) {
-            ile = ile / 10;
-        } else {
-            ile = ile / 10 + 1;
-        }
-        int tab[] = new int[ile];
-        for (int i = 0; i < ile; i++) {
-            tab[i] = i;
+                if (ile % 10 == 0) {
+                    ile = ile / 10;
+                } else {
+                    ile = ile / 10 + 1;
+                }
+                int tab[] = new int[ile];
+                for (int i = 0; i < ile; i++) {
+                    tab[i] = i;
 
-        }
-        model.addAttribute("ile", tab);
-        model.addAttribute("products", all);
+                }
+                model.addAttribute("ile", tab);
+                model.addAttribute("products", all);
+
 
 
         return "searchForm";
     }
 
 
-    @PostMapping("/search")
-    public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String word) {
+    @PostMapping(path = "/search")
+    public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String word,@RequestParam(defaultValue = "trafnosc") String nazwaa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
+        System.out.println("wyjscie");
         word=word.toUpperCase();
         List<String> list = Arrays.asList(word.split(" "));
+
+
 
 
         List<Product> allProducts = productRepository.findAll();
@@ -81,7 +85,22 @@ public class SearchController {
             }
 
         }
+
+        if(nazwaa=="trafnosc") {
+
+        }
+        if(nazwaa.equals("cenar")) {
+          searchProducts.sort(Comparator.comparing(Product::getPrcies));
+        }
+        if(nazwaa.equals("cenam")) {
+            searchProducts.sort(Comparator.comparing(Product::getPrcies));
+            Collections.reverse(searchProducts);
+
+        }
+
         Page<Product> all = new PageImpl<>(searchProducts, new PageRequest(page, 10), searchProducts.size());
+
+
         int ile = searchProducts.size();
 
         if (ile % 10 == 0) {
@@ -94,7 +113,7 @@ public class SearchController {
             tab[i] = i;
 
         }
-        System.out.println(ile);
+
         model.addAttribute("ile", tab);
         model.addAttribute("products", all);
 
