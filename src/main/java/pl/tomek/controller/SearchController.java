@@ -1,5 +1,6 @@
 package pl.tomek.controller;
 
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,9 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.tomek.model.Product;
 import pl.tomek.repository.ProductRepository;
 
@@ -27,14 +26,15 @@ public class SearchController {
         this.productRepository = productRepository;
     }
 
+
     @GetMapping("/search")
-    public String saerch(Model model, @RequestParam(defaultValue = "0") int page,@RequestParam(required = false) String word) {
+    public String saerch(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
 
-        System.out.println(word);
+
 
                 Page<Product> all = productRepository.findAll(new PageRequest(page, 10));
                 int ile = productRepository.findAll().size();
@@ -57,16 +57,16 @@ public class SearchController {
         return "searchForm";
     }
 
-
-    @PostMapping(path = "/search")
-    public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam String word,@RequestParam(defaultValue = "trafnosc") String nazwaa) {
+    
+    @RequestMapping(path = "/search")
+    public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String word,@RequestParam(defaultValue = "trafnosc") String nazwaa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
-        System.out.println("wyjscie");
-        word=word.toUpperCase();
-        List<String> list = Arrays.asList(word.split(" "));
+
+        String word2=word.toUpperCase();
+        List<String> list = Arrays.asList(word2.split(" "));
 
 
 
@@ -117,6 +117,7 @@ public class SearchController {
         model.addAttribute("ile", tab);
         model.addAttribute("products", all);
 
+        model.addAttribute("word",word);
 
         return "searchForm";
     }

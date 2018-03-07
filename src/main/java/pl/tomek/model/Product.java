@@ -5,11 +5,9 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.Set;
 
 @Entity
 @Data
@@ -37,6 +35,9 @@ public class Product {
     private String owner;
 
     private String licytujacy;
+
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    private Set<Zdjecia> zdjecia;
 
 
 

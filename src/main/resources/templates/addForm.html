@@ -120,7 +120,12 @@
             <div class="col-lg-8">
                 <h1 th:if="${add}">Product zostaw wystawiony </h1>
                 <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-                <form method="post" action="#" th:action="@{/add}" th:object="${product}">
+                <form method="post" enctype="multipart/form-data" action="#" th:action="@{/add}" th:object="${product}">
+
+                    <p th:if="${badExtend}" th:text="${badExtend}">Plik musi byc obrazkiem</p>
+                     Zdjecia:
+                    <input type="file" name="plik[]"  multiple="multiple" />
+
                     <p class="text-danger" th:errors="*{name}">Nie moze byc puste </p>
                     <input type="text" th:field="*{name}" placeholder="nazwa" /> <br />
                     <p class="text-danger" th:errors="*{state}">Nie moze byc puste </p>
