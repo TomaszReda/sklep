@@ -155,17 +155,17 @@
                     </tbody>
                 </table>
 
-            <h1 th:if="${zdjecia}"> Galeria</h1>
+                <h1 th:if="${zdjecia}"> Galeria</h1>
 
 
 
                 <div class="container">
                     <div class="row">
                         <div th:each="z: ${zdjecia}">
-                        <div class="col-md-4" >
-                            <div class="thumbnail">
-                                <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="images-1" style="width:100%" /></a>
-                             </div>
+                            <div class="col-md-4" >
+                                <div class="thumbnail">
+                                    <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="images-1" style="width:100%" /></a>
+                                </div>
                             </div>
                         </div>
 

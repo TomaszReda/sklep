@@ -1,5 +1,4 @@
 package pl.tomek.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,101 +45,84 @@ public class MyController {
 
 
     @GetMapping("/my")
-    public String my(Model model,@RequestParam(defaultValue = "0") int page)
-    {
+    public String my(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username",name);
-        model.addAttribute("nieznajomy","anonymousUser");
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
 
 
+        Page<Product> all = productRepository.findByOwner(name, new PageRequest(page, 10));
+        int ile = productRepository.findByOwner(name).size();
 
+        if (ile % 10 == 0) {
+            ile = ile / 10;
+        } else {
+            ile = ile / 10 + 1;
+        }
+        int tab[] = new int[ile];
+        for (int i = 0; i < ile; i++) {
+            tab[i] = i;
 
-            Page<Product> all=productRepository.findByOwner(name,new PageRequest(page,10));
-            int ile=productRepository.findByOwner(name).size();
-
-            if(ile%10==0)
-            {
-                ile=ile/10;
-            }
-            else
-            {
-             ile=ile/10+1;
-            }
-            int tab[]=new int[ile];
-            for(int i=0;i<ile;i++)
-            {
-                tab[i]=i;
-
-            }
-            model.addAttribute("ile",tab);
-            model.addAttribute("products", all);
+        }
+        model.addAttribute("ile", tab);
+        model.addAttribute("products", all);
 
         return "myForm";
     }
 
 
-
-
-
     @GetMapping("/usun")
-    public String usun(@RequestParam Long ID)
-    {
+    public String usun(@RequestParam Long ID) {
         productRepository.delete(ID);
         return "redirect:my";
     }
 
     @GetMapping("/details")
-    public String detail(@RequestParam Long ID,Model model)
-    {
+    public String detail(@RequestParam Long ID, Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username",name);
-        model.addAttribute("nieznajomy","anonymousUser");
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
 
-        Product product=productRepository.findOne(ID);
-        List<Zdjecia> zdjecia=product.getZdjecia();
-        Set<String> zd=new HashSet<>();
-        for(Zdjecia z:zdjecia)
-        {
+        Product product = productRepository.findOne(ID);
+        List<Zdjecia> zdjecia = product.getZdjecia();
+        Set<String> zd = new HashSet<>();
+        for (Zdjecia z : zdjecia) {
             zd.add(z.getAdres());
         }
-        model.addAttribute("zdjecia",zd);
-        model.addAttribute("product",product);
+        model.addAttribute("zdjecia", zd);
+        model.addAttribute("product", product);
         return "myDetails";
     }
+
     @GetMapping("/edytuj")
-    public String edytuj(@RequestParam Long ID,Model model)
-    {
+    public String edytuj(@RequestParam Long ID, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username",name);
-        model.addAttribute("nieznajomy","anonymousUser");
-        Product product=productRepository.findOne(ID);
-        model.addAttribute("ID",ID);
-        model.addAttribute("product",product);
-        List<Zdjecia> zdjecia=product.getZdjecia();
-        Set<String> zd=new HashSet<>();
-        for(Zdjecia z:zdjecia)
-        {
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
+        Product product = productRepository.findOne(ID);
+        model.addAttribute("ID", ID);
+        model.addAttribute("product", product);
+        List<Zdjecia> zdjecia = product.getZdjecia();
+        Set<String> zd = new HashSet<>();
+        for (Zdjecia z : zdjecia) {
             zd.add(z.getAdres());
         }
-        model.addAttribute("zdjecia",zd);
+        model.addAttribute("zdjecia", zd);
         return "EditDetailsForm";
     }
 
 
-
     @PostMapping("/edytuj")
-    public String edytuj(@RequestParam Long ID,Model model, @Valid @ModelAttribute Product product, BindingResult bindingResult,@RequestParam("plik[]") MultipartFile[] file)
-    {
-        int size=file.length;
-        if(file[0]!=null)
-        {
-            if (file.length>9) {
+    public String edytuj(@RequestParam Long ID, Model model, @Valid @ModelAttribute Product product, BindingResult bindingResult, @RequestParam("plik[]") MultipartFile[] file) {
+        int size = file.length;
+        if (file[0] != null) {
+            if (file.length > 9) {
                 model.addAttribute("limit", "Limit zdjec to 9");
-                return "redirect:edytuj?ID="+ID;
+                return "redirect:edytuj?ID=" + ID;
             }
             for (int i = 0; i < file.length; i++) {
                 String images = file[i].getContentType();
@@ -148,19 +130,15 @@ public class MyController {
                 images = images.substring(0, images.indexOf('/'));
 
                 if (images.equals("image")) {
-                }
-                else if(images.equals("application"))
-                {
+                } else if (images.equals("application")) {
                     size--;
-                }
-                else {
+                } else {
                     model.addAttribute("badExtend", "Moga byc tylko zdjecia");
-                    return "redirect:edytuj?ID="+ID;
+                    return "redirect:edytuj?ID=" + ID;
                 }
             }
         }
-        if(size>=1)
-        {
+        if (size >= 1) {
             product.getZdjecia().clear();
         }
 
@@ -192,38 +170,23 @@ public class MyController {
         }
 
 
+        if (bindingResult.hasErrors()) {
+            return "redirect:edytuj?ID=" + ID;
+        } else {
+            Product tmp = productRepository.findOne(ID);
+            product.setLicytujacy(tmp.getLicytujacy());
+            product.setOwner(tmp.getOwner());
+            product.setID(product.getID() - 1);
 
-
-
-
-        if( bindingResult.hasErrors()){
-            return "redirect:edytuj?ID="+ID;
-        }
-        else
-        {
-        Product tmp=productRepository.findOne(ID);
-        product.setLicytujacy(tmp.getLicytujacy());
-        product.setOwner(tmp.getOwner());
-        product.setID(product.getID()-1);
-
-        productRepository.delete(ID);
+            productRepository.delete(ID);
             System.out.println(product.getZdjecia());
             product.setZdjecia(product.getZdjecia());
-        ID=productRepository.save(product).getID();
-        Product product1=productRepository.findOne(ID);
-            System.out.println("Produkt po dodania"+product1.getZdjecia());
+            ID = productRepository.save(product).getID();
+            Product product1 = productRepository.findOne(ID);
+            System.out.println("Produkt po dodania" + product1.getZdjecia());
 
         }
 
-    return "redirect:details?ID="+ID;
+        return "redirect:details?ID=" + ID;
     }
-
-
-
-
-
-
-
-
-
 }

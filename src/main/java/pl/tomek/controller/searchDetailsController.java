@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.tomek.model.Product;
+import pl.tomek.model.Zdjecia;
 import pl.tomek.repository.ProductRepository;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class searchDetailsController {
@@ -29,6 +34,12 @@ public class searchDetailsController {
         model.addAttribute("nieznajomy", "anonymousUser");
 
         Product product = productRepository.findOne(ID);
+        List<Zdjecia> zdjecia = product.getZdjecia();
+        Set<String> zd = new HashSet<>();
+        for (Zdjecia z : zdjecia) {
+            zd.add(z.getAdres());
+        }
+        model.addAttribute("zdjecia", zd);
         model.addAttribute("product", product);
         return "searchDetails";
 
