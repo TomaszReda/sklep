@@ -59,19 +59,45 @@ public class AddForm {
     public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult,Model model,@RequestParam("plik[]") MultipartFile[] file)
     {
 
-     if(file.length>0&& !bindingResult.hasErrors())
-     {
-         for(int i=0;i<file.length;i++) {
-             String images = file[i].getContentType();
-             images = images.substring(0, images.indexOf('/'));
-             if (images.equals("image")) {
-                 try {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
+        int size=file.length;
+        if(file[0]!=null) {
 
+            if (file.length>9) {
+                model.addAttribute("limit", "Limit zdjec to 9");
+                return "addForm";
+            }
+
+            for (int i = 0; i < file.length; i++) {
+                String images = file[i].getContentType();
+
+                images = images.substring(0, images.indexOf('/'));
+
+                if (images.equals("image")) {
+                }
+                else if(images.equals("application"))
+                {
+                    size--;
+                }
+                else {
+                    model.addAttribute("badExtend", "Moga byc tylko zdjecia");
+                    return "addForm";
+                }
+            }
+        }
+
+     if(size>=1 && !bindingResult.hasErrors())
+     {
+                 for(int i=0;i<file.length;i++) {
+                 try {
                      String extend = file[i].getOriginalFilename();
                      extend = extend.substring(extend.indexOf('.'));
-                     System.out.println();
+
                      UUID uuid = UUID.randomUUID();
-                     String filename = "src\\main\\resources\\static\\images\\" + uuid.toString() + extend;
+                     String filename = "src\\main\\resources\\static\\images\\products\\" + uuid.toString() + extend;
                      byte[] bytes = file[i].getBytes();
                      File files = new File(filename);
                      files.createNewFile();
@@ -79,7 +105,7 @@ public class AddForm {
                      bufferedOutputStream.write(bytes);
                      bufferedOutputStream.close();
                      Zdjecia zdjecia=new Zdjecia();
-                     zdjecia.setAdres(filename);
+                     zdjecia.setAdres("images/products/"+uuid.toString()+extend);
                      product.getZdjecia().add(zdjecia);
 
 
@@ -88,14 +114,12 @@ public class AddForm {
                  } catch (IOException ex) {
                      ex.printStackTrace();
                  }
-             } else {
-                 model.addAttribute("badExtend", "To musi byc zdjecie");
-                 return "addForm";
-             }
-         }
+             } }
 
 
-     }
+
+
+
 
 
 
@@ -107,13 +131,10 @@ public class AddForm {
         else {
 
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String name = auth.getName(); //get logged in username
+
             product.setOwner(name);
             productRepository.save(product);
             model.addAttribute("Nie","Nie");
-            model.addAttribute("username",name);
-            model.addAttribute("nieznajomy","anonymousUser");
             return "redirect:/succes";
         }
     }

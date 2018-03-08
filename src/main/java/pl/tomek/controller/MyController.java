@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.tomek.model.Product;
+import pl.tomek.model.Zdjecia;
 import pl.tomek.repository.ProductRepository;
 
 import javax.persistence.Id;
 import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -77,12 +80,21 @@ public class MyController {
     @GetMapping("/details")
     public String detail(@RequestParam Long ID,Model model)
     {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
 
         Product product=productRepository.findOne(ID);
+        List<Zdjecia> zdjecia=product.getZdjecia();
+        Set<String> zd=new HashSet<>();
+        for(Zdjecia z:zdjecia)
+        {
+            zd.add(z.getAdres());
+        }
+
+        model.addAttribute("zdjecia",zd);
         model.addAttribute("product",product);
         return "myDetails";
     }
@@ -113,12 +125,11 @@ public class MyController {
         product.setLicytujacy(tmp.getLicytujacy());
         product.setOwner(tmp.getOwner());
         product.setID(product.getID()-1);
-            System.out.println(product);
-            System.out.println(tmp);
+
         productRepository.delete(ID);
         productRepository.save(product);
         ID=productRepository.save(product).getID();
-            System.out.println(product);
+
         }
 
     return "redirect:details?ID="+ID;

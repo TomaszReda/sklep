@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,9 +38,8 @@ public class Product {
 
     private String licytujacy;
 
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    private Set<Zdjecia> zdjecia;
-
+    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    private List<Zdjecia> zdjecia=new ArrayList<>();
 
 
 

@@ -122,7 +122,8 @@
                 <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
                 <form method="post" enctype="multipart/form-data" action="#" th:action="@{/add}" th:object="${product}">
 
-                    <p th:if="${badExtend}" th:text="${badExtend}">Plik musi byc obrazkiem</p>
+                    <p class="text-danger"  th:if="${badExtend}" th:text="${badExtend}">Plik musi byc obrazkiem</p>
+                    <p class="text-danger"  th:if="${limit}" th:text="${limit}">Mozna dodac maks 9 zdjec</p>
                      Zdjecia:
                     <input type="file" name="plik[]"  multiple="multiple" />
 
