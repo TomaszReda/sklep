@@ -1,6 +1,5 @@
 package pl.tomek.controller;
 
-import org.hibernate.internal.CoreLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,22 +21,18 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Controller
 public class AddForm {
 
     private ProductRepository productRepository;
+    private ZdjeciaRepositoru zdjeciaRepositoru;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
-    private ZdjeciaRepositoru zdjeciaRepositoru;
 
     @Autowired
     public void setZdjeciaRepositoru(ZdjeciaRepositoru zdjeciaRepositoru) {
@@ -45,28 +40,26 @@ public class AddForm {
     }
 
     @GetMapping("/add")
-    public String add(Model model)
-    {
+    public String add(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username",name);
-        model.addAttribute("nieznajomy","anonymousUser");
-        model.addAttribute("product",new Product());
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
+        model.addAttribute("product", new Product());
         return "addForm";
     }
 
     @PostMapping("/add")
-    public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult,Model model,@RequestParam("plik[]") MultipartFile[] file)
-    {
+    public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam("plik[]") MultipartFile[] file) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username",name);
-        model.addAttribute("nieznajomy","anonymousUser");
-        int size=file.length;
-        if(file[0]!=null) {
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
+        int size = file.length;
+        if (file[0] != null) {
 
-            if (file.length>9) {
+            if (file.length > 9) {
                 model.addAttribute("limit", "Limit zdjec to 9");
                 return "addForm";
             }
@@ -77,75 +70,62 @@ public class AddForm {
                 images = images.substring(0, images.indexOf('/'));
 
                 if (images.equals("image")) {
-                }
-                else if(images.equals("application"))
-                {
+                } else if (images.equals("application")) {
                     size--;
-                }
-                else {
+                } else {
                     model.addAttribute("badExtend", "Moga byc tylko zdjecia");
                     return "addForm";
                 }
             }
         }
 
-     if(size>=1 && !bindingResult.hasErrors())
-     {
-                 for(int i=0;i<file.length;i++) {
-                 try {
-                     String extend = file[i].getOriginalFilename();
-                     extend = extend.substring(extend.indexOf('.'));
+        if (size >= 1 && !bindingResult.hasErrors()) {
+            for (int i = 0; i < file.length; i++) {
+                try {
+                    String extend = file[i].getOriginalFilename();
+                    extend = extend.substring(extend.indexOf('.'));
 
-                     UUID uuid = UUID.randomUUID();
-                     String filename = "src\\main\\resources\\static\\images\\products\\" + uuid.toString() + extend;
-                     byte[] bytes = file[i].getBytes();
-                     File files = new File(filename);
-                     files.createNewFile();
-                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(files));
-                     bufferedOutputStream.write(bytes);
-                     bufferedOutputStream.close();
-                     Zdjecia zdjecia=new Zdjecia();
-                     zdjecia.setAdres("images/products/"+uuid.toString()+extend);
-                     product.getZdjecia().add(zdjecia);
+                    UUID uuid = UUID.randomUUID();
+                    String filename = "src\\main\\resources\\static\\images\\products\\" + uuid.toString() + extend;
+                    byte[] bytes = file[i].getBytes();
+                    File files = new File(filename);
 
-
-
-
-                 } catch (IOException ex) {
-                     ex.printStackTrace();
-                 }
-             } }
+                    files.createNewFile();
+                    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(files));
+                    bufferedOutputStream.write(bytes);
+                    bufferedOutputStream.close();
+                    Zdjecia zdjecia = new Zdjecia();
+                    zdjecia.setAdres("images/products/" + uuid.toString() + extend);
+                    product.getZdjecia().add(zdjecia);
+                    System.out.println("");
 
 
-
-
-
-
-
-
-
-        if(bindingResult.hasErrors())
-        {
-            return "addForm";
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
-        else {
+
+
+        if (bindingResult.hasErrors()) {
+            return "addForm";
+        } else {
 
 
 
             product.setOwner(name);
             productRepository.save(product);
-            model.addAttribute("Nie","Nie");
+            model.addAttribute("Nie", "Nie");
             return "redirect:/succes";
         }
     }
 
-        @GetMapping("/succes")
-        public String succes(Model model)
-        {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String name = auth.getName(); //get logged in username
-            model.addAttribute("username",name);
-            model.addAttribute("nieznajomy","anonymousUser");
-            return "succedAddForm";
-        }
+    @GetMapping("/succes")
+    public String succes(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        model.addAttribute("username", name);
+        model.addAttribute("nieznajomy", "anonymousUser");
+        return "succedAddForm";
+    }
 }

@@ -38,7 +38,7 @@ public class Product {
 
     private String licytujacy;
 
-    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
     private List<Zdjecia> zdjecia=new ArrayList<>();
 
 

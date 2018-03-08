@@ -38,7 +38,7 @@
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="icon" type="image/png" href="images/favicon.png" />
-
+    <link rel="stylesheet" href="css/lightbox.css" />
 </head>
 <body>
 <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -119,7 +119,13 @@
         <div>
             <div class="col-lg-8">
 
-                <form method="post" action="#" th:action="@{/edytuj(ID=${ID})}" th:object="${product}">
+                <form method="post" action="#" enctype="multipart/form-data"  th:action="@{/edytuj(ID=${ID})}" th:object="${product}">
+
+                    <p class="text-danger"  th:if="${badExtend}" th:text="${badExtend}">Plik musi byc obrazkiem</p>
+                    <p class="text-danger"  th:if="${limit}" th:text="${limit}">Mozna dodac maks 9 zdjec</p>
+                    Zamien zdjecia na nowe:
+                    <input type="file" name="plik[]"  multiple="multiple" />
+
                     <p class="text-danger" th:errors="*{name}" >Nie moze byc puste </p>
                     <input type="text" th:field="*{name}" th:value="*{name}"  /> <br />
                     <p class="text-danger" th:errors="*{state}">Nie moze byc puste </p>
@@ -166,6 +172,24 @@
                     <input type="submit" value="Wyslij" />
                     <input type="reset" value="Reset" />
                 </form>
+
+
+                <h1 th:if="${zdjecia}"> Galeria</h1>
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div th:each="z: ${zdjecia}">
+                            <div class="col-md-4" >
+                                <div class="thumbnail">
+                                    <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="images-1" style="width:100%" /></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 <!--
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for..." />
@@ -200,6 +224,6 @@
 </footer>
 
 
-
+<script src="js/lightbox.js"></script>
 </body>
 </html>
