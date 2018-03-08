@@ -155,20 +155,22 @@
                     </tbody>
                 </table>
 
-            <h1> Galeria</h1>
-                <section>
+            <h1 th:if="${zdjecia}"> Galeria</h1>
 
-                <h3>A Four Image Set</h3>
-                    <div class="columns">
-                    <div class="col-md-4">
-                <div th:each="z: ${zdjecia}">
-                    <a class="example-image-link" th:href="${z}" data-lightbox="example-1"> <img class="example-image" th:src="${z}" alt="images-1" style="width:100%" /></a>
-                </div>
-                 </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div th:each="z: ${zdjecia}">
+                        <div class="col-md-4" >
+                            <div class="thumbnail">
+                                <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="images-1" style="width:100%" /></a>
+                             </div>
+                            </div>
+                        </div>
+
                     </div>
-
-
-                </section>
+                </div>
 
 
                 <!--

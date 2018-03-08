@@ -94,6 +94,7 @@ public class MyController {
             zd.add(z.getAdres());
         }
 
+        System.out.println(zd);
         model.addAttribute("zdjecia",zd);
         model.addAttribute("product",product);
         return "myDetails";
