@@ -8,4 +8,6 @@ import pl.tomek.model.User;
 @RepositoryRestResource
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByLogin(String login);
+    User findFirstByEmail(String email);
+
 }

@@ -121,7 +121,37 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-                <a th:href="@{/loginform}"> Błedny login lub hasło spróbuj jeszcze raz </a>
+              <h2> Zmien hasło</h2>
+                <form th:action="@{/zmienHaslo}" action="#" method="post">
+                    <p class="text-danger" th:if="${notEquals2}" th:text="${notEquals2}" ></p>
+                Aktualne hasło: <input type="password" name="aktualne" /> <br />
+                    <p class="text-danger" th:if="${notEquals}" th:text="${notEquals}" ></p>
+                    <p class="text-danger" th:if="${notLength1}" th:text="${notLength1}" ></p>
+                Nowe hasło: <input type="password" name="nowe" /><br />
+                    <p class="text-danger" th:if="${notLength2}" th:text="${notLength2}" ></p>
+                Potwierdź nowe hasło: <input type="password" name="nowe2"/><br />
+                    <input type="submit" value="Zapisz ustawienia"/><br />
+                </form>
+
+                <h2>Zmien email</h2>
+                <form th:action="@{/zmienEmail}" action="#" method="post">
+                    <p class="text-danger" th:if="${badEmail}" th:text="${badEmail}" ></p>
+                    Nowy email: <input type="email" th:value="${user.email}" name="email" /><br />
+                    <p class="text-danger" th:if="${password}" th:text="${password}" ></p>
+                    Potwierdź zmianę adresu e-mail swoim hasłem: <input type="password" name="aktualne" /><br />
+                    <input type="submit" value="Zapisz ustawienia"/><br />
+                </form>
+
+                <h2>Zmien login</h2>
+                <p class="text-danger" th:if="${badLogin}" th:text="${badLogin}" ></p>
+                <p class="text-danger" th:if="${logins}" th:text="${logins}" ></p>
+                <p class="text-danger" th:if="${successs}" th:text="${successs}" ></p>
+                <p class="text-danger" th:if="${Admin}" th:text="${Admin}" ></p>
+
+                <form th:action="@{/zmienLogin}" action="#" method="post">
+                    Login: <input type="text" th:value="${user.login}" name="login" /><br />
+                    <input type="submit" value="Zapisz ustawienia"/><br />
+                </form>
 
                 <!--
               <div class="input-group">

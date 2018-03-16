@@ -135,6 +135,9 @@
                     <input type="text" th:field="*{login}" placeholder="login"/> <br/>
                     <p class="text-danger" th:errors="*{passworld}">Haslo nie moze byc puste i minimum 5 znakow</p>
                     <input type="password" th:field="*{passworld}" placeholder="haslo "/><br/>
+                    <p class="text=danger" th:if="${regulamin}" th:text="${regulamin}" />
+                    <input type="checkbox" th:field="*{regulamin1}" value="Akceptuje regulamin" />Akceptuje <a th:href="@{/terms}">Regulamin</a> <br />
+                    <input type="checkbox" th:field="*{regulamin2}" value="Akceptuje warunki prywartnosci " /> Akceptuje <a th:href="@{/privacy}">Warunki prywatnosci</a> <br />
                     <input type="submit" value="Wyslij"/>
 
 

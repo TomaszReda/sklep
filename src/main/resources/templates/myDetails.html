@@ -63,7 +63,8 @@
                 <li  th:unless="${username}==${nieznajomy}"><a th:href="@{/add}">Wystaw</a></li>
                 <li><a th:href="@{/search}">Wyszukaj</a></li>
                 <li th:unless="${username}==${nieznajomy}"><a th:href="@{/my}">Moje wystawione</a></li>
-
+                <li th:if="${username}=='Admin'"><a th:href="@{/admin}">Panel Administratora</a></li>
+                <li th:unless="${username}==${nieznajomy}"><a th:href="@{/myAccount}">Moje Konto</a></li>
                 <!--  <li class="dropdown">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                    <ul class="dropdown-menu">
@@ -164,7 +165,7 @@
                         <div th:each="z: ${zdjecia}">
                             <div class="col-md-4" >
                                 <div class="thumbnail">
-                                    <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="images-1" style="width:100%" /></a>
+                                    <a  th:href="${z}" data-lightbox="example-1"> <img  th:src="${z}" alt="Zdjecie się łąduje" style="width:100%" /></a>
                                 </div>
                             </div>
                         </div>

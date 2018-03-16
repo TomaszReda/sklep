@@ -1,6 +1,6 @@
 package pl.tomek.service;
 
-import jdk.nashorn.internal.objects.annotations.Setter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.tomek.model.User;

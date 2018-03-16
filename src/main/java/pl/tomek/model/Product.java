@@ -1,15 +1,16 @@
 package pl.tomek.model;
 
-import javafx.scene.image.Image;
+
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Data
@@ -37,6 +38,10 @@ public class Product {
     private String owner;
 
     private String licytujacy;
+
+
+
+
 
     @OneToMany(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
     private List<Zdjecia> zdjecia=new ArrayList<>();

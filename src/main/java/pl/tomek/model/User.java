@@ -1,16 +1,11 @@
 package pl.tomek.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.validator.constraints.Email;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -28,7 +23,7 @@ public class User {
 
    @NotEmpty(message = "{pl.tomek.model.User.empty}")
     private String email;
-    @Length(min = 6,max = 12,message = "{pl.tomek.model.User.min2}")
+    @Length(min = 5,max = 12,message = "{pl.tomek.model.User.min2}")
     private String login;
     @Length(min = 9,max = 15,message = "{pl.tomek.model.User.min}")
     private String passworld;
@@ -36,5 +31,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private Set<UserRole> userRoleSet;
 
+    private boolean regulamin1;
+    private boolean regulamin2;
 
 }

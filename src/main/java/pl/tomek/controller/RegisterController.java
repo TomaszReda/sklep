@@ -38,6 +38,11 @@ public class RegisterController {
         {
             return "registerForm";
         }
+        if(user.isRegulamin1()==false || user.isRegulamin2()==false)
+        {
+            model.addAttribute("regulamin","Musisz zaakceptować Regulamin i Warunki prywatności");
+            return "registerForm";
+        }
         else
         {
             List<User> all=userRepository.findAll();

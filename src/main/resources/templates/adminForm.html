@@ -121,7 +121,21 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-                <a th:href="@{/loginform}"> Błedny login lub hasło spróbuj jeszcze raz </a>
+               <h2> Usun użytkownika</h2>
+
+                <form th:action="@{/deleteUser}" action="#" method="post">
+                <select name="nazwa" >
+                    <option th:each="n: ${users}" th:text="${n.login}"  >AGD</option>
+                </select><br />
+                <input type="submit" value="Usun" />
+                </form>
+                <h2> Usun przedmiot</h2>
+                <form th:action="@{/deleteProduct}" action="#" method="post">
+                    <select name="nazwa" >
+                        <option th:each="p: ${products}" th:text="${p.getHeader()}"  >AGD</option>
+                    </select><br />
+                    <input type="submit" value="Usun" />
+                </form>
 
                 <!--
               <div class="input-group">

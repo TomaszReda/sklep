@@ -52,6 +52,7 @@ public class AddForm {
     @PostMapping("/add")
     public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam("plik[]") MultipartFile[] file) {
 
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
@@ -78,6 +79,8 @@ public class AddForm {
                 }
             }
         }
+
+
 
         if (size >= 1 && !bindingResult.hasErrors()) {
             for (int i = 0; i < file.length; i++) {
