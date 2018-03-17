@@ -17,6 +17,8 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         System.out.println(name);
+        System.out.println(auth.getDetails().toString());
+
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
 

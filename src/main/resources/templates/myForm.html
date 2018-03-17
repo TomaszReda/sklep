@@ -120,10 +120,20 @@
         <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
         <div>
             <div class="col-lg-8">
-              <ul th:each="n: ${products}" th:object="${n}" class="list-group" >
-                  <li class="list-group-item" > <a  th:href="@{/details(ID=*{ID})}" th:text="*{header}"> </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>
 
-              </ul>
+                <ul th:each="n: ${products}" th:object="${n}" class="list-group" >
+                    <li class="list-group-item" >
+
+                        <a  th:href="@{/details(ID=*{ID})}">
+                            <img th:if="*{zdjecia.isEmpty()}" width="20%" height="20%" src="images/Brak_zdjęcia.jpg"  alt="Bląd"  />
+                            <img th:unless="*{zdjecia.isEmpty()}" width="20%" height="20%" th:src="*{zdjecia.get(0).getAdres()}"  alt="Błąd" />
+                        </a>
+
+
+                        <a  th:href="@{/details(ID=*{ID})}"  th:text="*{header}" > </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>
+
+                </ul>
+
 
 
                  <a th:each="i: ${ile}" th:text="${i}+1" th:href="@{/my(page=${i})}"></a>

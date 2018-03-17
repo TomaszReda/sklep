@@ -34,6 +34,7 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/skeleton.css" />
+    <link rel="stylesheet" href="css/lightbox.css" />
 
     <!-- Favicon
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -144,10 +145,17 @@
 
                 <br />
                 <ul th:each="n: ${products}" th:object="${n}" class="list-group" >
-                    <li class="list-group-item" > <a  th:href="@{/detailsSearch(ID=*{ID})}" th:text="*{header}"> </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>
+                    <li class="list-group-item" >
+
+                        <a  th:href="@{/detailsSearch(ID=*{ID})}">
+                       <img th:if="*{zdjecia.isEmpty()}" width="20%" height="20%" src="images/Brak_zdjęcia.jpg"  alt="Bląd"  />
+                        <img th:unless="*{zdjecia.isEmpty()}" width="20%" height="20%" th:src="*{zdjecia.get(0).getAdres()}"  alt="Błąd" />
+                        </a>
+
+
+                        <a  th:href="@{/detailsSearch(ID=*{ID})}" th:text="*{header}" > </a> <span th:text="*{prcies}+' zł'" class="badge">12</span> </li>
 
                 </ul>
-
 
                 <a th:each="i: ${ile}" th:text="${i}+1" th:href="@{/search(page=${i})}"></a>
 
@@ -178,6 +186,6 @@
 </footer>
 
 
-
+<script src="js/lightbox.js"></script>
 </body>
 </html>
