@@ -65,7 +65,7 @@ public class SearchController {
     }
 
     
-    @RequestMapping(path = "/search")
+    @RequestMapping(path = "/searchh")
     public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String word,@RequestParam(defaultValue = "trafnosc") String nazwaa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
