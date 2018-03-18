@@ -189,18 +189,11 @@ public class MyController {
         if (bindingResult.hasErrors()) {
             return "redirect:edytuj?ID=" + ID;
         } else {
-            Product tmp = productRepository.findOne(ID);
-            product.setLicytujacy(tmp.getLicytujacy());
-            product.setOwner(tmp.getOwner());
 
-            product.setID(product.getID() - 1);
-
-            productRepository.delete(ID);
-            System.out.println(product.getZdjecia());
-            product.setZdjecia(product.getZdjecia());
-            ID = productRepository.save(product).getID();
-            Product product1 = productRepository.findOne(ID);
-            System.out.println("Produkt po dodania" + product1.getZdjecia());
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName(); //get logged in username
+            product.setOwner(name);
+            productRepository.save(product);
 
         }
 

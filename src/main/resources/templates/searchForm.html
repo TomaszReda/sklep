@@ -135,12 +135,51 @@
                 </div>
 
                     <br />
-                    <select name="nazwaa" >
-                        <option th:value="trafnosc" >Trafność: największa  </option>
-                        <option th:value="cenar">Cena: Rosonąco </option>
+                    <table class="table table-bordered"><thead>
+                        <tr>
+                            <th>Filtry</th>
+                            <th>Kategoria</th>
+                            <th>Stan</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                    <select name="filtr" >
+                        <option th:value="${option1}" th:text="${option}">---</option>
+                        <option>---</option>
+                        <option th:value="trafnosc" >Trafność: największa</option>
+                        <option th:value="cenar">Cena: Rosonąco</option>
                         <option th:value="cenam">Cena: Malejąco</option>
                     </select>
+                            </td>
+                            <td>
 
+                    <select name="kategoria" >
+                        <option  th:value="${option22}" th:text="${option2}">---</option>
+                        <option>---</option>
+                        <option th:value="Wszystkie" >Wszystkie</option>
+                        <option th:value="AGD" >AGD</option>
+                        <option th:value="RTV">RTV</option>
+                        <option th:value="Sport">Sport</option>
+                        <option th:value="Rozrywka">Rozrywka</option>
+                        <option th:value="Inne">Inne</option>
+                    </select>
+                            </td>
+                            <td>
+                    <select name="stan" >
+                        <option  th:value="${option33}" th:text="${option3}">---</option>
+                        <option>---</option>
+                        <option th:value="Obojetnie">Obojetnie</option>
+                        <option th:value="Zły" >Zły</option>
+                        <option th:value="Dobry" >Dobry</option>
+                        <option th:value="Bardzo_Dobry" >Bardzo Dobry</option>
+                        <option th:value="Nie_używany">Nie używany</option>
+                    </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </form>
 
                 <br />
@@ -148,8 +187,8 @@
                     <li class="list-group-item" >
 
                         <a  th:href="@{/detailsSearch(ID=*{ID})}">
-                       <img th:if="*{zdjecia.isEmpty()}" width="20%" height="20%" src="images/Brak_zdjęcia.jpg"  alt="Bląd"  />
-                        <img th:unless="*{zdjecia.isEmpty()}" width="20%" height="20%" th:src="*{zdjecia.get(0).getAdres()}"  alt="Błąd" />
+                       <img th:if="*{zdjecia.isEmpty()}" width="15%" height="15%" src="images/Brak_zdjęcia.jpg"  alt="Bląd"  />
+                        <img th:unless="*{zdjecia.isEmpty()}" width="15%" height="15%" th:src="*{zdjecia.get(0).getAdres()}"  alt="Błąd" />
                         </a>
 
 
@@ -157,8 +196,9 @@
 
                 </ul>
 
-                <a th:each="i: ${ile}" th:text="${i}+1" th:href="@{/search(page=${i})}"></a>
 
+                <a th:if="${word} and ${nazwa}" th:each="i: ${ile}" th:text="${i}+1" th:href="@{/searchh(page=${i},word=${word},filtr=${nazwa},kategoria=${option2},stan=${option3})}"></a>
+                <a th:unless="${word} and ${nazwa}" th:each="i: ${ile}" th:text="${i}+1" th:href="@{/search(page=${i})}"></a>
                 <!--
 
               -->
@@ -166,6 +206,7 @@
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
     </div>
+
 
 
     <!-- –––––––––––––––––––––––––––––––––––––––––––––––––– -->

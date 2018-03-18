@@ -16,5 +16,9 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Set<Product> findByOwner(String owner);
     Product findFirstByHeader(String header);
     Set<Product> findAllByLicytujacy(String licytujacy);
+    List<Product> findAllByKategoria(String kategoria);
+    List<Product> findAllByState(String state);
+    List<Product> findAllByStateAndKategoria(String state,String kategoria);
+
 
 }
