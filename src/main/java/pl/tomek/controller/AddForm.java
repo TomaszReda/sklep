@@ -2,6 +2,8 @@ package pl.tomek.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.UUID;
 
 @Controller
@@ -43,8 +46,14 @@ public class AddForm {
     public String add(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
+
         model.addAttribute("product", new Product());
         return "addForm";
     }

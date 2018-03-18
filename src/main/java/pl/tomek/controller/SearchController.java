@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +33,13 @@ public class SearchController {
     public String saerch(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
 
 
 
@@ -62,8 +69,13 @@ public class SearchController {
     public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String word,@RequestParam(defaultValue = "trafnosc") String nazwaa) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
 
         String word2=word.toUpperCase();
         List<String> list = Arrays.asList(word2.split(" "));

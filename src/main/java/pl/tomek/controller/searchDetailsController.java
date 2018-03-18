@@ -2,6 +2,8 @@ package pl.tomek.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import pl.tomek.model.Product;
 import pl.tomek.model.Zdjecia;
 import pl.tomek.repository.ProductRepository;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,8 +33,13 @@ public class searchDetailsController {
     public String details(Model model, @RequestParam Long ID) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
 
         Product product = productRepository.findOne(ID);
         List<Zdjecia> zdjecia = product.getZdjecia();
@@ -56,8 +64,13 @@ public class searchDetailsController {
     public String succes(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
         return "succesBoughtForm";
     }
 
@@ -65,8 +78,13 @@ public class searchDetailsController {
     public String oferta(Model model, @RequestParam Long ID, @RequestParam double cena) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
 
 
         Product product = productRepository.findOne(ID);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.tomek.model.User;
 import pl.tomek.repository.UserRepository;
+import pl.tomek.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,6 +19,13 @@ import java.util.Set;
 public class RegisterController {
 
     private UserRepository userRepository;
+
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -34,6 +42,7 @@ public class RegisterController {
     @PostMapping("/register")
     public String SaveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,Model model)
     {
+        System.err.println(user);
         if(bindingResult.hasErrors())
         {
             return "registerForm";
@@ -61,7 +70,8 @@ public class RegisterController {
 
             }
 
-            userRepository.save(user);
+
+           userService.addwithDefaultRole(user);
             return "succesForm";
         }
 

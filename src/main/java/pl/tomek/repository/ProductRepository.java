@@ -15,5 +15,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findByOwner(String owner,Pageable pageRequest);
     Set<Product> findByOwner(String owner);
     Product findFirstByHeader(String header);
+    Set<Product> findAllByLicytujacy(String licytujacy);
 
 }

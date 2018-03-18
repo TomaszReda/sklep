@@ -3,6 +3,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class MyController {
@@ -48,8 +47,13 @@ public class MyController {
     public String my(Model model, @RequestParam(defaultValue = "0") int page) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
 
 
         Page<Product> all = productRepository.findByOwner(name, new PageRequest(page, 10));
@@ -83,8 +87,14 @@ public class MyController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
+
 
         Product product = productRepository.findOne(ID);
         List<Zdjecia> zdjecia = product.getZdjecia();
@@ -101,8 +111,14 @@ public class MyController {
     public String edytuj(@RequestParam Long ID, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
-        model.addAttribute("username", name);
-        model.addAttribute("nieznajomy", "anonymousUser");
+        Collection<? extends GrantedAuthority> au= auth.getAuthorities();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
+        boolean isAdmin=au.contains(grantedAuthority);
+
+        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("username",name);
+        model.addAttribute("nieznajomy","anonymousUser");
+
         Product product = productRepository.findOne(ID);
         model.addAttribute("ID", ID);
         model.addAttribute("product", product);
@@ -176,6 +192,7 @@ public class MyController {
             Product tmp = productRepository.findOne(ID);
             product.setLicytujacy(tmp.getLicytujacy());
             product.setOwner(tmp.getOwner());
+
             product.setID(product.getID() - 1);
 
             productRepository.delete(ID);

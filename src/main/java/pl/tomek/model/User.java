@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,7 +30,7 @@ public class User {
     private String passworld;
 
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    private Set<UserRole> userRoleSet;
+    private Set<UserRole> userRoleSet=new HashSet<>();
 
     private boolean regulamin1;
     private boolean regulamin2;
