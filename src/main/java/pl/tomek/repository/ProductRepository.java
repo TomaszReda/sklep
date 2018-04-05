@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
-    Page<Product> findByOwner(String owner,Pageable pageRequest);
+
     Set<Product> findByOwner(String owner);
     Product findFirstByHeader(String header);
     Set<Product> findAllByLicytujacy(String licytujacy);
@@ -20,5 +20,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findAllByState(String state);
     List<Product> findAllByStateAndKategoria(String state,String kategoria);
 
+
+    Page<Product> findByOwner(String owner,Pageable pageRequest);
 
 }

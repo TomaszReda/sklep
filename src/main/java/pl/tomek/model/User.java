@@ -1,7 +1,9 @@
 package pl.tomek.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -11,6 +13,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -34,5 +38,6 @@ public class User {
 
     private boolean regulamin1;
     private boolean regulamin2;
+
 
 }
