@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.FilterChainProxy;
 import pl.tomek.service.UserDetailImplement;
 
 @Configuration
@@ -16,6 +17,7 @@ public class security extends WebSecurityConfigurerAdapter {
     {
         return new UserDetailImplement();
     }
+
 
 
 

@@ -59,13 +59,16 @@ public class AddForm {
     }
 
     @PostMapping("/add")
-    public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam("plik[]") MultipartFile[] file) {
+    public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam(value = "plik[]",required = false) MultipartFile[] file) {
+
 
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
+        System.err.println("Pliczek1 "+file);
+        System.err.println("Pliczek2 "+file[0]);
         int size = file.length;
         if (file[0] != null) {
 
@@ -88,7 +91,7 @@ public class AddForm {
                 }
             }
         }
-
+        System.err.println(product);
 
 
         if (size >= 1 && !bindingResult.hasErrors()) {

@@ -1,5 +1,6 @@
 package pl.tomek.controller;
 
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +28,7 @@ public class PrivacyTermsController {
         model.addAttribute("isAdmin",isAdmin);
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
-        return "terms";
+        return "termsForm";
     }
 
     @GetMapping("/privacy")
@@ -42,6 +43,8 @@ public class PrivacyTermsController {
         model.addAttribute("isAdmin",isAdmin);
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
-        return "privacy";
+        return "privacyForm";
     }
+
+
 }

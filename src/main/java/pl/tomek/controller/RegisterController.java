@@ -42,16 +42,19 @@ public class RegisterController {
     @PostMapping("/register")
     public String SaveUser(@Valid @ModelAttribute User user, BindingResult bindingResult,Model model)
     {
-        System.err.println(user);
+
         if(bindingResult.hasErrors())
         {
+
             return "registerForm";
         }
+
         if(user.isRegulamin1()==false || user.isRegulamin2()==false)
         {
             model.addAttribute("regulamin","Musisz zaakceptować Regulamin i Warunki prywatności");
             return "registerForm";
         }
+
         else
         {
             List<User> all=userRepository.findAll();
