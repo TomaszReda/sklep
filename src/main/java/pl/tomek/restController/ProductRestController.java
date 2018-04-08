@@ -27,9 +27,10 @@ public class ProductRestController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> productList()
     {
-
+        System.err.println(productRepository.findAll());
         return productRepository.findAll();
     }
+
     @GetMapping(path = "/my",produces = MediaType.APPLICATION_JSON_VALUE)
     public Set<Product> myProduct()
     {
@@ -43,6 +44,8 @@ public class ProductRestController {
     {
         return productRepository.findOne(id);
     }
+
+
     @GetMapping(path = "/my/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Product meproductList(@PathVariable int id)
     {
@@ -56,10 +59,11 @@ public class ProductRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveProduct(@RequestBody Product product)
     {
+
         productRepository.save(product);
     }
 
-    @PostMapping(path = "my",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/my",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveProduct2(@RequestBody Product product)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

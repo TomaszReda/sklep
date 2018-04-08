@@ -79,12 +79,12 @@ public class AddFormTest {
         list.add(zdjecia);
         Product product=new Product(1L,"NAMEE","STATEE","HEADERR","KATEGORIAA",23,"OPISS","AUKCJAA","OWNERR","LICYTUJACYY",list);
 
-
+        MultipartFile file=null;
 
 
         mockMvc.perform(post("/add")
                 .param("ID", String.valueOf(product.getID()))
-                // .param("file",null)
+                 .param("file", String.valueOf(file))
                 //.param("plik[]",null)
                 //.param("plik[]","asdada")
                 //.param("file","plik[]")

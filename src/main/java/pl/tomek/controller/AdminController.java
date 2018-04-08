@@ -70,22 +70,27 @@ public class AdminController {
    public String delete(@RequestParam String nazwa)
    {
         Product product=productRepository.findFirstByHeader(nazwa);
+       System.out.println(product);
         productRepository.delete(product);
        return "redirect:admin";
    }
 
    @PostMapping("/deleteUser")
     public String usun(@RequestParam String nazwa,Model model) {
-
+       System.err.println("aaanazwa"+nazwa);
        User user = userRepository.findByLogin(nazwa);
        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
        UserRole userRole=userRoleRepository.findByRole("ADMIN ROLE");
-       System.err.println(user.getUserRoleSet().contains(userRole));
-
+       System.err.println("aaaa User"+user);
+       System.err.println("aaaa UserRole"+userRole);
+       System.err.println("aaaa "+user.getUserRoleSet()+" : "+userRole);
+       System.err.println("aaaaaa"+user.getUserRoleSet().contains(userRole));
     if(!user.getUserRoleSet().contains(userRole)) {
 
+        System.err.println("bbbbb");
         userRepository.delete(user);
         Set<Product> productSet = productRepository.findByOwner(user.getLogin());
+        System.err.println("aaaa productSet"+productSet);
         for (Product p : productSet) {
             productRepository.delete(p);
         }
