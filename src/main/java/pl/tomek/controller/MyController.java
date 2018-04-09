@@ -45,6 +45,7 @@ public class MyController {
 
     @GetMapping("/my")
     public String my(Model model, @RequestParam(defaultValue = "0") int page) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();
@@ -78,12 +79,14 @@ public class MyController {
 
     @GetMapping("/usun")
     public String usun(@RequestParam Long ID) {
+
         productRepository.delete(ID);
         return "redirect:my";
     }
 
     @GetMapping("/details")
     public String detail(@RequestParam Long ID, Model model) {
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
@@ -97,18 +100,23 @@ public class MyController {
 
 
         Product product = productRepository.findOne(ID);
+
         List<Zdjecia> zdjecia = product.getZdjecia();
+
         Set<String> zd = new HashSet<>();
         for (Zdjecia z : zdjecia) {
             zd.add(z.getAdres());
         }
+
         model.addAttribute("zdjecia", zd);
         model.addAttribute("product", product);
+
         return "myDetails";
     }
 
     @GetMapping("/edytuj")
     public String edytuj(@RequestParam Long ID, Model model) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();

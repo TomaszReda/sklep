@@ -23,4 +23,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     Page<Product> findByOwner(String owner,Pageable pageRequest);
 
+
 }

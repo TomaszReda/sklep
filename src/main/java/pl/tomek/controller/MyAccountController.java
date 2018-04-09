@@ -63,13 +63,13 @@ public class MyAccountController {
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();
         GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
         boolean isAdmin=au.contains(grantedAuthority);
-
+        System.err.println("cccc1");
         model.addAttribute("isAdmin",isAdmin);
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
 
         User user=userRepository.findByLogin(name);
-
+        System.err.println("cccc2"+user);
         if(!nowe.equals(nowe2))
         {
             model.addAttribute("notEquals","Hasła muszą byc identyczne");
@@ -93,8 +93,9 @@ public class MyAccountController {
             userRepository.save(user);
 
         }
-
+        System.err.println("cccc3");
         User aaa = userRepository.findByLogin(name);
+        System.err.println("cccc4"+user);
         model.addAttribute("user", aaa);
         return "myAccountForm";
     }
@@ -112,15 +113,16 @@ public class MyAccountController {
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();
         GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ADMIN ROLE");
         boolean isAdmin=au.contains(grantedAuthority);
-
         model.addAttribute("isAdmin",isAdmin);
         model.addAttribute("username",name);
         model.addAttribute("nieznajomy","anonymousUser");
 
         User user=userRepository.findByLogin(name);
+
         if(!user.getPassworld().equals(aktualne))
             model.addAttribute("password","Złe hasło");
             User emaill=userRepository.findFirstByEmail(email);
+
         if(emaill!=null)
         {
             model.addAttribute("badEmail","Email juz w uzyciu jest");

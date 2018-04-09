@@ -72,7 +72,7 @@ public class SearchController {
     }
 
     
-    @RequestMapping(path = "/searchh")
+    @GetMapping("/searchh")
     public String precisionSearch(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String word,@RequestParam(defaultValue = "trafnosc") String filtr,@RequestParam(defaultValue = "Wszystkie")String kategoria,
     @RequestParam(defaultValue = "Obojetnie") String stan
     ) {
@@ -110,6 +110,8 @@ public class SearchController {
         else
         {
             allProducts=productRepository.findAllByStateAndKategoria(stan,kategoria);
+
+
         }
 
 
@@ -210,6 +212,7 @@ public class SearchController {
             tab[i] = i;
 
         }
+
 
         model.addAttribute("option3",stan);
         model.addAttribute("option33",stan);

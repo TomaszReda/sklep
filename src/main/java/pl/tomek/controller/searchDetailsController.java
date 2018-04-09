@@ -31,6 +31,7 @@ public class searchDetailsController {
 
     @GetMapping("/detailsSearch")
     public String details(Model model, @RequestParam Long ID) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();
@@ -56,7 +57,11 @@ public class searchDetailsController {
 
     @GetMapping("/buy")
     public String buy(Model model, @RequestParam Long ID) {
+
+
         productRepository.delete(ID);
+
+
         return "redirect:succesBought";
     }
 
@@ -76,6 +81,8 @@ public class searchDetailsController {
 
     @PostMapping("/oferta")
     public String oferta(Model model, @RequestParam Long ID, @RequestParam double cena) {
+
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         Collection<? extends GrantedAuthority> au= auth.getAuthorities();
@@ -88,7 +95,10 @@ public class searchDetailsController {
 
 
         Product product = productRepository.findOne(ID);
+
         double prices = product.getPrcies();
+        System.err.println("PRICES "+prices);
+
         if (cena < prices * 1.05) {
 
             return "redirect:/detailsSearch?ID=" + ID;
