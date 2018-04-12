@@ -61,37 +61,49 @@ public class AddForm {
     @PostMapping("/add")
     public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam(value = "plik[]",required = false) MultipartFile[] file) {
 
-
+        System.err.println("ccc"+file);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
         model.addAttribute("nieznajomy", "anonymousUser");
-        System.err.println("Pliczek1 "+file);
-        System.err.println("Pliczek2 "+file[0]);
-        int size = file.length;
-        if (file[0] != null) {
+        int size ;
 
-            if (file.length > 9) {
-                model.addAttribute("limit", "Limit zdjec to 9");
-                return "addForm";
-            }
+        if(file==null) {
+            size=0;
+        }
+        else {
+        size=file.length;
+            if(file[0] != null) {
 
-            for (int i = 0; i < file.length; i++) {
-                String images = file[i].getContentType();
-
-                images = images.substring(0, images.indexOf('/'));
-
-                if (images.equals("image")) {
-                } else if (images.equals("application")) {
-                    size--;
-                } else {
-                    model.addAttribute("badExtend", "Moga byc tylko zdjecia");
+                if (file.length > 9) {
+                    model.addAttribute("limit", "Limit zdjec to 9");
                     return "addForm";
                 }
+
+                for (int i = 0; i < file.length; i++) {
+                    String images = file[i].getContentType();
+
+                    images = images.substring(0, images.indexOf('/'));
+
+                    if (images.equals("image")) {
+                    } else if (images.equals("application")) {
+                        size--;
+                    } else {
+                        model.addAttribute("badExtend", "Moga byc tylko zdjecia");
+                        return "addForm";
+                    }
+                }
             }
+
+
+
+
         }
-        System.err.println(product);
+
+
+        System.err.println("ccc2"+product);
+
 
 
         if (size >= 1 && !bindingResult.hasErrors()) {
@@ -122,15 +134,20 @@ public class AddForm {
         }
 
 
+        System.err.println("ccc3"+product);
         if (bindingResult.hasErrors()) {
+            System.err.println("errors" +bindingResult.getAllErrors());
             return "addForm";
         } else {
 
 
-
+            System.err.println("ccc4"+product);
             product.setOwner(name);
+            System.err.println("ccc5"+product);
             productRepository.save(product);
+            System.err.println("ccc6"+product);
             model.addAttribute("Nie", "Nie");
+            System.err.println("ccc7"+product);
             return "redirect:/succes";
         }
     }

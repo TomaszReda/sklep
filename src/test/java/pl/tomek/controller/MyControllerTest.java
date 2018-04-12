@@ -14,16 +14,21 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.multipart.MultipartFile;
 import pl.tomek.model.Product;
 import pl.tomek.model.Zdjecia;
 import pl.tomek.repository.ProductRepository;
 import pl.tomek.repository.ZdjeciaRepositoru;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -148,6 +153,77 @@ public class MyControllerTest {
     }
 
     @Test
-    public void edytuj1() {
+    @WithMockUser(username = "OWNERR")
+    public void edytuj1() throws Exception {
+        List<Zdjecia> list=new ArrayList<>();
+        Zdjecia zdjecia=new Zdjecia();
+        zdjecia.setAdres("adress");
+        list.add(zdjecia);
+        Product product=new Product(1L,"NAMEE","STATEE","HEADERR","KATEGORIAA",23,"OPISS","AUKCJAA","OWNERR","LICYTUJACYY",list);
+        MultipartFile multipartFilee=new MultipartFile() {
+            @Override
+            public String getName() {
+                return "tomek2ss";
+            }
+
+            @Override
+            public String getOriginalFilename() {
+                return "tomek3ss";
+            }
+
+            @Override
+            public String getContentType() {
+                return "tomek4ss";
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public long getSize() {
+                return 4;
+            }
+
+            @Override
+            public byte[] getBytes() throws IOException {
+                return new byte[0];
+            }
+
+            @Override
+            public InputStream getInputStream() throws IOException {
+                return null;
+            }
+
+            @Override
+            public void transferTo(File file) throws IOException, IllegalStateException {
+
+            }
+        };
+        Mockito.when(productRepository.save(product)).thenReturn(product);
+        MultipartFile[] file=new MultipartFile[1];
+        file[0]=multipartFilee;
+        mockMvc.perform(post("/edytuj")
+                .param("ID", String.valueOf(product.getID()))
+                .param("file", String.valueOf(file))
+                .param("prcies", String.valueOf(product.getPrcies()))
+                .param("aukcja",product.getAukcja())
+                .param("header",product.getHeader())
+                .param("kategoria",product.getKategoria())
+                .param("licytujacy",product.getLicytujacy())
+                .param("name",product.getName())
+                .param("opis",product.getOpis())
+                .param("owner",product.getOwner())
+                .param("state",product.getState())
+
+        )
+
+                .andExpect(view().name("redirect:details?ID=1"));
+
+
+
+
+
     }
 }
