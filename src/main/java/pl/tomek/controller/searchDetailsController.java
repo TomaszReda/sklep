@@ -97,7 +97,7 @@ public class searchDetailsController {
         Product product = productRepository.findOne(ID);
 
         double prices = product.getPrcies();
-        System.err.println("PRICES "+prices);
+
 
         if (cena < prices * 1.05) {
 

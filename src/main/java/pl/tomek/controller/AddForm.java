@@ -61,7 +61,7 @@ public class AddForm {
     @PostMapping("/add")
     public String dodaj(@Valid @ModelAttribute Product product, BindingResult bindingResult, Model model, @RequestParam(value = "plik[]",required = false) MultipartFile[] file) {
 
-        System.err.println("ccc"+file);
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
@@ -102,7 +102,7 @@ public class AddForm {
         }
 
 
-        System.err.println("ccc2"+product);
+
 
 
 
@@ -124,7 +124,7 @@ public class AddForm {
                     Zdjecia zdjecia = new Zdjecia();
                     zdjecia.setAdres("images/products/" + uuid.toString() + extend);
                     product.getZdjecia().add(zdjecia);
-                    System.out.println("");
+
 
 
                 } catch (IOException ex) {
@@ -134,20 +134,20 @@ public class AddForm {
         }
 
 
-        System.err.println("ccc3"+product);
+
         if (bindingResult.hasErrors()) {
-            System.err.println("errors" +bindingResult.getAllErrors());
+
             return "addForm";
         } else {
 
 
-            System.err.println("ccc4"+product);
+
             product.setOwner(name);
-            System.err.println("ccc5"+product);
+
             productRepository.save(product);
-            System.err.println("ccc6"+product);
+
             model.addAttribute("Nie", "Nie");
-            System.err.println("ccc7"+product);
+
             return "redirect:/succes";
         }
     }
