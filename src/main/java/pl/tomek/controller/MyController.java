@@ -142,7 +142,7 @@ public class MyController {
 
     @PostMapping("/edytuj")
     public String edytuj(@RequestParam Long ID, Model model, @Valid @ModelAttribute Product product, BindingResult bindingResult, @RequestParam(value = "plik[]",required = false) MultipartFile[] file) {
-        System.err.println("cccc1");
+
         int size;
         if(file==null) {
             size =0;
@@ -170,12 +170,12 @@ public class MyController {
             }}
         }
 
-        System.err.println("cccc2");
+
 
         if (size >= 1) {
             product.getZdjecia().clear();
         }
-        System.err.println("cccc3");
+
         if (size >= 1 && !bindingResult.hasErrors()) {
             for (int i = 0; i < file.length; i++) {
                 try {
@@ -203,7 +203,7 @@ public class MyController {
             }
         }
 
-        System.err.println("cccc4");
+
         if (bindingResult.hasErrors()) {
             return "redirect:edytuj?ID=" + ID;
         } else {
